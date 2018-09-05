@@ -4,7 +4,7 @@ Description: 'Lambda Api Funtion for IVE Att & Abs Calculator
   '
 Globals:
   Api:
-    Cors: '''https://ive.miklet.pro'''
+    Cors: '''*'''
   Function:
     Environment:
       Variables:
@@ -81,7 +81,7 @@ Resources:
     Type: AWS::Cognito::UserPoolClient
   getDataFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/c6bd13b6c0cbba0a71db5d071232ddfb
+      CodeUri: s3://ive-calc-serverless/537dd38f0dd98bae7a54450b68e055c2
       Events:
         getData:
           Properties:
@@ -102,7 +102,7 @@ Resources:
     Type: AWS::Serverless::Function
   preConfirmedFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/c6bd13b6c0cbba0a71db5d071232ddfb
+      CodeUri: s3://ive-calc-serverless/537dd38f0dd98bae7a54450b68e055c2
       FunctionName: IveCalcPreConfirmed
       Handler: app.preConfirmedHandler
       Policies:
@@ -123,7 +123,7 @@ Resources:
     Type: AWS::Serverless::Function
   profileInfoFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/c6bd13b6c0cbba0a71db5d071232ddfb
+      CodeUri: s3://ive-calc-serverless/537dd38f0dd98bae7a54450b68e055c2
       Events:
         updateData:
           Properties:
@@ -144,7 +144,7 @@ Resources:
     Type: AWS::Serverless::Function
   updateDataFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/c6bd13b6c0cbba0a71db5d071232ddfb
+      CodeUri: s3://ive-calc-serverless/537dd38f0dd98bae7a54450b68e055c2
       Events:
         updateData:
           Properties:

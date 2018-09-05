@@ -5,7 +5,7 @@ Description: >
     
 Globals:
     Api:
-        Cors: "'https://ive.miklet.pro'"
+        Cors: "'*'"
     Function:
         Timeout: 3
         Environment:

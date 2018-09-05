@@ -12,7 +12,7 @@ const origin = { internal: "https://ive.miklet.pro", external: "https://myportal
 
 exports.getDataHandler = async(et, cont) => {
     console.log(et);
-    let data = et.body;
+    let data = JSON.parse(et.body);
     return getData(data).then(res => {
         console.log(res);
         return successResponse(res.Item, origin.external);
@@ -21,7 +21,7 @@ exports.getDataHandler = async(et, cont) => {
 
 exports.updateDataHandler = async(et, cont) => {
     console.log(et);
-    let data = et.body;
+    let data = JSON.parse(et.body);
     return updateData(data).then(res => {
         console.log(res);
         return successResponse(res.Attributes, origin.external);
@@ -41,7 +41,7 @@ exports.preConfirmedHandler = async(et, cont) => {
 
 exports.profileHandler = async(et, cont) => {
     console.log(et);
-    let data = et.body;
+    let data = JSON.parse(et.body);
     let decoded = jwt.decode(data.token);
     return getData({ Secret: decoded["custom:secret"], StudentId: decoded["custom:studentId"] }).then(res => {
         console.log(res);
@@ -117,14 +117,18 @@ function putData(x) {
 }
 
 function successResponse(message, origin) {
-    return {
+    let x = {
         "statusCode": 200,
         "body": JSON.stringify(message),
         "headers": {
-            "Access-Control-Allow-Origin": origin.internal
+            "Access-Control-Allow-Origin": origin,
+            "Access-Control-Allow-Methods": "OPTIONS,POST",
+            "Content-Type": "application/json"
         },
         "isBase64Encoded": false
     };
+    console.log(x);
+    return x;
 }
 
 function handleError(err, id) {
@@ -140,7 +144,7 @@ function errorResponse(errorMessage, awsRequestId) {
             Reference: awsRequestId,
         }),
         headers: {
-            "Access-Control-Allow-Origin": origin.internal,
+            "Access-Control-Allow-Origin": "*",
         }
     };
 }
