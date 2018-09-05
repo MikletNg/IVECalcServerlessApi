@@ -1,0 +1,152 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    Lambda Api Funtion for IVE Att & Abs Calculator
+    
+Globals:
+    Api:
+        Cors: "'https://ive.miklet.pro'"
+    Function:
+        Timeout: 3
+        Environment:
+                Variables:
+                  TABLE_NAME: !Ref DynamoDBTable
+                  USERPOOL_ID: !Ref IVECalcUserpool
+
+Resources:
+    getDataFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            FunctionName: IveCalcGetData
+            CodeUri: lambda_function/
+            Handler: app.getDataHandler
+            Runtime: nodejs8.10
+            Policies:
+                Statement:
+                - Effect: Allow
+                  Action: dynamodb:GetItem
+                  Resource: !GetAtt DynamoDBTable.Arn
+            Events:
+                getData:
+                    Type: Api
+                    Properties:
+                        Path: /get
+                        Method: post
+    
+    updateDataFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            FunctionName: IveCalcUpdateData
+            CodeUri: lambda_function/
+            Handler: app.updateDataHandler
+            Runtime: nodejs8.10
+            Policies:
+                Statement:
+                - Effect: Allow
+                  Action: dynamodb:UpdateItem
+                  Resource: !GetAtt DynamoDBTable.Arn
+            Events:
+                updateData:
+                    Type: Api
+                    Properties:
+                        Path: /update
+                        Method: post
+    
+    preConfirmedFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            FunctionName: IveCalcPreConfirmed
+            CodeUri: lambda_function/
+            Handler: app.preConfirmedHandler
+            Runtime: nodejs8.10
+            Policies:
+                Statement:
+                - Effect: Allow
+                  Action: dynamodb:PutItem
+                  Resource: !GetAtt DynamoDBTable.Arn
+                - Effect: Allow
+                  Action: cognito-idp:AdminUpdateUserAttributes
+                  Resource: !GetAtt IVECalcUserpool.Arn
+    
+    profileInfoFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            FunctionName: IveCalcProfileInfo
+            CodeUri: lambda_function/
+            Handler: app.profileHandler
+            Runtime: nodejs8.10
+            Policies:
+                Statement:
+                - Effect: Allow
+                  Action: dynamodb:GetItem
+                  Resource: !GetAtt DynamoDBTable.Arn
+            Events:
+                updateData:
+                    Type: Api
+                    Properties:
+                        Path: /profileInfo
+                        Method: post
+    
+    DynamoDBTable:
+        Type: AWS::DynamoDB::Table
+        Properties: 
+          TableName: User
+          AttributeDefinitions: 
+            - AttributeName: StudentId
+              AttributeType: S
+            - AttributeName: Secret
+              AttributeType: S
+          KeySchema: 
+            - AttributeName: StudentId
+              KeyType: HASH
+            - AttributeName: Secret
+              KeyType: RANGE
+          ProvisionedThroughput: 
+            ReadCapacityUnits: 5
+            WriteCapacityUnits: 5
+    
+    IVECalcUserpool:
+        Type: AWS::Cognito::UserPool
+        Properties:
+          EmailVerificationSubject: 'Please activate you account on IVE Attendance & Absent Calculator Web Services'
+          EmailVerificationMessage: 'Your verification code is {####}. Please go http://ive.miklet.pro/verify.html to activate your account.'
+          AutoVerifiedAttributes:
+            - email
+          Schema: 
+            - AttributeDataType: String
+              Name: email
+              Required: true
+            - AttributeDataType: String
+              Mutable: true
+              Name: studentId
+            - AttributeDataType: String
+              Mutable: true
+              Name: secret
+          UserPoolName: IVECalcUserpool
+    
+    IVECalcUserpoolClient:  
+        Type: AWS::Cognito::UserPoolClient
+        Properties:
+            ClientName: IveCalcWebClient
+            GenerateSecret: false
+            UserPoolId: !Ref IVECalcUserpool
+            ReadAttributes:
+              - email
+              - custom:studentId
+              - custom:secret
+            WriteAttributes:
+              - email
+              - custom:studentId
+              - custom:secret
+        
+Outputs:
+    Api:
+      Description: "API Gateway endpoint URL for Prod stage for all function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    poolId:
+      Description: "Userpool ID"
+      Value: !Ref IVECalcUserpool
+    ClientId:
+      Description: "Userpool Client ID"
+      Value: !Ref IVECalcUserpoolClient
+
