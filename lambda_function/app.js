@@ -68,13 +68,13 @@ function profileTable(user, res) {
     if ("dashboard" in res.Data) {
         map.highlited = "";
         for (let i in res.Data.dashboard) {
-            map.highlited += `<tr><td>${res.Data.sbj[i].name}</td><td><span class="badge badge-success">${res.Data.sbj[i].att_p}</span></td><td><span class="badge badge-danger">${res.Data.sbj[i].abs_p}</span></td></tr>`;
+            map.highlighted += `<tr><td>${res.Data.sbj[res.Data.dashboard[i]].name}</td><td><span class="badge badge-success">${res.Data.sbj[res.Data.dashboard[i]].att_p}</span></td><td><span class="badge badge-danger">${res.Data.sbj[res.Data.dashboard[i]].abs_p}</span></td></tr>`;
         }
     }
     if ("sbj" in res.Data) {
         map.subjectTable = "";
         for (let i in res.Data.sbj) {
-            map.subjectTable += `<tr><td>${i.t_hours}r</td><td>${i.id}</td><td>${i.att}<span class="badge badge-success">${i.att_p}</span></td><td>${i.abs}<span class="badge badge-danger">${i.abs_p}</span></td><td>${i.abg_att}</td><td>${i.remain}</td></tr>`;
+            map.subjectTable += `<tr><td>${res.Data.sbj[i].t_hours}hrs</td><td>${res.Data.sbj[i].name}</td><td>${res.Data.sbj[i].att}<span class="badge badge-success">${res.Data.sbj[i].att_p}</span></td><td>${res.Data.sbj[i].abs}<span class="badge badge-danger">${res.Data.sbj[i].abs_p}</span></td><td>${res.Data.sbj[i].avg_att}</td><td>${res.Data.sbj[i].remain}</td></tr>`;
         }
     }
     return map;
