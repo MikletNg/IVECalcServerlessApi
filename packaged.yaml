@@ -52,13 +52,6 @@ Resources:
         to activate your account.
       EmailVerificationSubject: Please activate you account on IVE Attendance & Absent
         Calculator Web Services
-      Policies:
-        PasswordPolicy:
-        - MinimumLength: 8
-          RequireLowercase: false
-          RequireNumbers: false
-          RequireSymbols: false
-          RequireUppercase: false
       Schema:
       - AttributeDataType: String
         Name: email
@@ -88,7 +81,7 @@ Resources:
     Type: AWS::Cognito::UserPoolClient
   getDataFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/9f1a127ae5ce0882b8e0a37987e1c2ea
+      CodeUri: s3://ive-calc-serverless/c1f5b528ff5ff563088af2561e007128
       Events:
         getData:
           Properties:
@@ -109,7 +102,7 @@ Resources:
     Type: AWS::Serverless::Function
   preConfirmedFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/9f1a127ae5ce0882b8e0a37987e1c2ea
+      CodeUri: s3://ive-calc-serverless/c1f5b528ff5ff563088af2561e007128
       FunctionName: IveCalcPreConfirmed
       Handler: app.preConfirmedHandler
       Policies:
@@ -130,7 +123,7 @@ Resources:
     Type: AWS::Serverless::Function
   profileInfoFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/9f1a127ae5ce0882b8e0a37987e1c2ea
+      CodeUri: s3://ive-calc-serverless/c1f5b528ff5ff563088af2561e007128
       Events:
         updateData:
           Properties:
@@ -151,7 +144,7 @@ Resources:
     Type: AWS::Serverless::Function
   updateDataFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/9f1a127ae5ce0882b8e0a37987e1c2ea
+      CodeUri: s3://ive-calc-serverless/c1f5b528ff5ff563088af2561e007128
       Events:
         updateData:
           Properties:

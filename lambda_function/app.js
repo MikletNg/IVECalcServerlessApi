@@ -122,7 +122,8 @@ function successResponse(message, origin) {
         "body": JSON.stringify(message),
         "headers": {
             "Access-Control-Allow-Origin": origin,
-            "Access-Control-Allow-Methods": "OPTIONS,POST",
+            "Access-Control-Allow-Headers": "Content-Type, Accept",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST",
             "Content-Type": "application/json"
         },
         "isBase64Encoded": false
