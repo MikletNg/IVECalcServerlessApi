@@ -74,7 +74,7 @@ function profileTable(user, res) {
     if ("sbj" in res.Data) {
         map.subjectTable = "";
         for (let i in res.Data.sbj) {
-            map.subjectTable += `<tr><td>${res.Data.sbj[i].t_hours}hrs</td><td>${res.Data.sbj[i].name}</td><td>${res.Data.sbj[i].att}<span class="badge badge-success">${res.Data.sbj[i].att_p}</span></td><td>${res.Data.sbj[i].abs}<span class="badge badge-danger">${res.Data.sbj[i].abs_p}</span></td><td>${res.Data.sbj[i].avg_att}</td><td>${res.Data.sbj[i].remain}</td></tr>`;
+            map.subjectTable += `<tr><td>${res.Data.sbj[i].name}</td><td>${res.Data.sbj[i].t_hours}hrs</td><td>${res.Data.sbj[i].att}<span class="badge badge-success">${res.Data.sbj[i].att_p}</span></td><td>${res.Data.sbj[i].abs}<span class="badge badge-danger">${res.Data.sbj[i].abs_p}</span></td><td>${res.Data.sbj[i].avg_att}</td><td>${res.Data.sbj[i].remain}</td></tr>`;
         }
     }
     return map;
@@ -123,7 +123,7 @@ function successResponse(message, origin) {
         "headers": {
             "Access-Control-Allow-Origin": origin,
             "Access-Control-Allow-Headers": "Content-Type, Accept",
-                        "Access-Control-Allow-Methods": "OPTIONS,POST",
+            "Access-Control-Allow-Methods": "OPTIONS,POST",
             "Content-Type": "application/json"
         },
         "isBase64Encoded": false

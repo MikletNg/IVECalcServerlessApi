@@ -81,7 +81,7 @@ Resources:
     Type: AWS::Cognito::UserPoolClient
   getDataFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/c1f5b528ff5ff563088af2561e007128
+      CodeUri: s3://ive-calc-serverless/d422fc7d7804fa7ad3e33f2540cd8772
       Events:
         getData:
           Properties:
@@ -102,7 +102,7 @@ Resources:
     Type: AWS::Serverless::Function
   preConfirmedFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/c1f5b528ff5ff563088af2561e007128
+      CodeUri: s3://ive-calc-serverless/d422fc7d7804fa7ad3e33f2540cd8772
       FunctionName: IveCalcPreConfirmed
       Handler: app.preConfirmedHandler
       Policies:
@@ -123,7 +123,7 @@ Resources:
     Type: AWS::Serverless::Function
   profileInfoFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/c1f5b528ff5ff563088af2561e007128
+      CodeUri: s3://ive-calc-serverless/d422fc7d7804fa7ad3e33f2540cd8772
       Events:
         updateData:
           Properties:
@@ -144,7 +144,7 @@ Resources:
     Type: AWS::Serverless::Function
   updateDataFunction:
     Properties:
-      CodeUri: s3://ive-calc-serverless/c1f5b528ff5ff563088af2561e007128
+      CodeUri: s3://ive-calc-serverless/d422fc7d7804fa7ad3e33f2540cd8772
       Events:
         updateData:
           Properties:
