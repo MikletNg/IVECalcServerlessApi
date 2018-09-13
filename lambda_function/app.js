@@ -15,6 +15,9 @@ exports.getDataHandler = async(et, cont) => {
     let data = JSON.parse(et.body);
     return getData(data).then(res => {
         console.log(res);
+        if (isEmptyObject(res)) {
+            return errorResponse("Item not found", cont.awsRequestId);
+        }
         return successResponse(res.Item, origin.external);
     }).catch(err => handleError(err, cont.awsRequestId));
 };
@@ -114,6 +117,10 @@ function putData(x) {
         },
         ReturnValues: "ALL_OLD"
     }).promise();
+}
+
+function isEmptyObject(obj) {
+    return !Object.keys(obj).length;
 }
 
 function successResponse(message, origin) {
