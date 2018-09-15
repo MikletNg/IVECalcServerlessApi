@@ -32,3 +32,5 @@ sam deploy \
     --capabilities CAPABILITY_IAM \
     --region ap-southeast-1
 ```
+
+Then, go Cognito user pool config the trigger of `Post confirmation` to `IvePreConfirmed`.
